@@ -17,6 +17,12 @@ public interface HelloOperations {
   @Post("/echo/longs")
   Flux<Long> echoLongs(@Body Flux<Long> longs);
   
+  @Post("/echo/listbooleans")
+  Flux<Boolean> echoListBooleans(@Body List<Boolean> bools);
+  
+  @Post("/echo/liststrings")
+  Flux<String> echoListStrings(@Body List<String> strings);
+  
   @Post("/echo/listlongs")
   Flux<Long> echoListLongs(@Body List<Long> longs);
   

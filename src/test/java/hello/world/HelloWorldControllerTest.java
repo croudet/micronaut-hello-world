@@ -14,7 +14,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.runtime.server.EmbeddedServer;
-import reactor.core.publisher.Flux;
 
 public class HelloWorldControllerTest {
   private static EmbeddedServer server;
@@ -38,7 +37,7 @@ public class HelloWorldControllerTest {
 
   @Test
   public void echoBools() {
-    HttpRequest request = HttpRequest.POST("/hello/echo/booleans", Arrays.asList(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE)).contentType(MediaType.APPLICATION_JSON_TYPE);
+    HttpRequest request = HttpRequest.POST("/hello/echo/booleans", "[true, true, false]").contentType(MediaType.APPLICATION_JSON_TYPE);
     String body = client.toBlocking().retrieve(request);
     assertNotNull(body);
     System.out.println("echoBooleans " + body);
@@ -47,7 +46,7 @@ public class HelloWorldControllerTest {
   
   @Test
   public void echoStrings() {
-    HttpRequest request = HttpRequest.POST("/hello/echo/strings", Arrays.asList("a", "b", "c")).contentType(MediaType.APPLICATION_JSON_TYPE);
+    HttpRequest request = HttpRequest.POST("/hello/echo/strings", "[\"a\", \"b\", \"c\"]").contentType(MediaType.APPLICATION_JSON_TYPE);
     String body = client.toBlocking().retrieve(request);
     assertNotNull(body);
     System.out.println("echoStrings " + body);
@@ -56,7 +55,7 @@ public class HelloWorldControllerTest {
   
   @Test
   public void echoLongs() {
-    HttpRequest request = HttpRequest.POST("/hello/echo/longs", Arrays.asList(1L, 10L, 100L)).contentType(MediaType.APPLICATION_JSON_TYPE);
+    HttpRequest request = HttpRequest.POST("/hello/echo/longs", "[1, 10, 100]").contentType(MediaType.APPLICATION_JSON_TYPE);
     String body = client.toBlocking().retrieve(request);
     assertNotNull(body);
     System.out.println("echoLongs " + body);
@@ -65,10 +64,28 @@ public class HelloWorldControllerTest {
   
   @Test
   public void echoListLongs() {
-    HttpRequest request = HttpRequest.POST("/hello/echo/listlongs", Arrays.asList(1L, 10L, 100L)).contentType(MediaType.APPLICATION_JSON_TYPE);
+    HttpRequest request = HttpRequest.POST("/hello/echo/listlongs", "[1, 10, 100]").contentType(MediaType.APPLICATION_JSON_TYPE);
     String body = client.toBlocking().retrieve(request);
     assertNotNull(body);
     System.out.println("echoListLongs " + body);
     assertEquals("[1,10,100]", body);
+  }
+  
+  @Test
+  public void echoListStrings() {
+    HttpRequest request = HttpRequest.POST("/hello/echo/liststrings", "[\"a\", \"b\", \"c\"]").contentType(MediaType.APPLICATION_JSON_TYPE);
+    String body = client.toBlocking().retrieve(request);
+    assertNotNull(body);
+    System.out.println("echoListStrings " + body);
+    assertEquals("[\"a\",\"b\",\"c\"]", body);
+  }
+  
+  @Test
+  public void echoListBooleans() {
+    HttpRequest request = HttpRequest.POST("/hello/echo/listbooleans", "[true, true, false]").contentType(MediaType.APPLICATION_JSON_TYPE);
+    String body = client.toBlocking().retrieve(request);
+    assertNotNull(body);
+    System.out.println("echoListBooleans " + body);
+    assertEquals("[true,true,false]", body);
   }
 }
