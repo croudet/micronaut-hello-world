@@ -1,17 +1,32 @@
 package hello.world;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import java.util.List;
 
-import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 @Controller("/hello") 
-public class HelloController {
-    @Inject @Named("helloServiceEng") HelloService helloService;
+public class HelloController implements HelloOperations {
+
+  @Override
+  public Flux<Boolean> echoBooleans(@Body Flux<Boolean> bools) {
+    return bools.subscribeOn(Schedulers.elastic()).map(b -> b);
+  }
+
+  @Override
+  public Flux<String> echoStrings(@Body Flux<String> strings) {
+    return strings.subscribeOn(Schedulers.elastic()).map(b -> b);
+  }
+
+  @Override
+  public Flux<Long> echoLongs(@Body Flux<Long> longs) {
+    return longs.subscribeOn(Schedulers.elastic()).map(b -> b);
+  }
+
+  @Override
+  public Flux<Long> echoListLongs(List<Long> longs) {
+    return Flux.fromIterable(longs);
+  }
     
-    @Get(uri = "/{name}", produces = MediaType.TEXT_PLAIN) 
-    public String hello(String name) {
-        return helloService.hello(name); 
-    }
 }
