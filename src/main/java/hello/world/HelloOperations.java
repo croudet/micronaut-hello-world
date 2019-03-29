@@ -1,29 +1,48 @@
 package hello.world;
 
-import java.util.List;
+import javax.annotation.Nullable;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Get;
+import io.reactivex.Flowable;
 import reactor.core.publisher.Flux;
 
 public interface HelloOperations {
 
-  @Post("/echo/booleans")
-  Flux<Boolean> echoBooleans(@Body Flux<Boolean> bools);
-  
-  @Post("/echo/strings")
-  Flux<String> echoStrings(@Body Flux<String> strings);
-  
-  @Post("/echo/longs")
-  Flux<Long> echoLongs(@Body Flux<Long> longs);
-  
-  @Post("/echo/listbooleans")
-  Flux<Boolean> echoListBooleans(@Body List<Boolean> bools);
-  
-  @Post("/echo/liststrings")
-  Flux<String> echoListStrings(@Body List<String> strings);
-  
-  @Post("/echo/listlongs")
-  Flux<Long> echoListLongs(@Body List<Long> longs);
-  
+    /**
+     * Lists the channel updates stored in the database.
+     *
+     * @param offset The offset.
+     * @param max    The maximum number of returned objects.
+     * @param sort   The sort order.
+     * @return A list of ChannelUpdates.
+     */
+    @Get("/channel-updates{?offset,max,sort:[asc|desc|ASC|DESC]}")
+    Flux<String> listChannelUpdates(@Nullable @Min(0L) Integer offset, @Nullable @Min(1L) @Max(10000L) Integer max,
+            @Nullable SortOrder sort);
+
+    /**
+     * Lists the assets stored in the database.
+     *
+     * @param offset The offset.
+     * @param max    The maximum number of returned objects.
+     * @param sort   The sort order.
+     * @return A list of Assets.
+     */
+    @Get("/assets{?offset,max,sort:[asc|desc|ASC|DESC]}")
+    Flux<String> listAssets(@Nullable @Min(0L) Integer offset, @Nullable @Min(1L) @Max(10000L) Integer max,
+            @Nullable SortOrder sort);
+
+    /**
+     * Lists the assets stored in the database.
+     *
+     * @param offset The offset.
+     * @param max    The maximum number of returned objects.
+     * @param sort   The sort order.
+     * @return A list of Assets.
+     */
+    @Get("/rx/assets{?offset,max,sort:[asc|desc|ASC|DESC]}")
+    Flowable<String> listAssetsRx(@Nullable @Min(0L) Integer offset, @Nullable @Min(1L) @Max(10000L) Integer max,
+            @Nullable SortOrder sort);
 }

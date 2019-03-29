@@ -1,42 +1,31 @@
 package hello.world;
 
-import java.util.List;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.reactivex.Flowable;
 import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
 
-@Controller("/hello") 
+@Controller("/hello")
 public class HelloController implements HelloOperations {
 
-  @Override
-  public Flux<Boolean> echoBooleans(Flux<Boolean> bools) {
-    return bools.subscribeOn(Schedulers.elastic()).map(b -> b);
-  }
+    @Override
+    public Flowable<String> listAssetsRx(@Min(0) Integer offset, @Min(1) @Max(10000) Integer max, SortOrder sort) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-  @Override
-  public Flux<String> echoStrings(Flux<String> strings) {
-    return strings.subscribeOn(Schedulers.elastic()).map(b -> b);
-  }
+    @Override
+    public Flux<String> listAssets(@Min(0) Integer offset, @Min(1) @Max(10000) Integer max, SortOrder sort) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-  @Override
-  public Flux<Long> echoLongs(Flux<Long> longs) {
-    return longs.subscribeOn(Schedulers.elastic()).map(b -> b);
-  }
+    @Override
+    public Flux<String> listChannelUpdates(@Min(0) Integer offset, @Min(1) @Max(10000) Integer max, SortOrder sort) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-  @Override
-  public Flux<Long> echoListLongs(List<Long> longs) {
-    return Flux.fromIterable(longs);
-  }
-
-  @Override
-  public Flux<Boolean> echoListBooleans(List<Boolean> bools) {
-    return Flux.fromIterable(bools);
-  }
-
-  @Override
-  public Flux<String> echoListStrings(List<String> strings) {
-    return Flux.fromIterable(strings);
-  }
-    
 }

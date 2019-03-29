@@ -12,6 +12,9 @@ apply plugin:"java"
 version "0.1"
 group "hello.world"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -20,7 +23,7 @@ repositories {
 
 dependencyManagement {
     imports {
-       mavenBom('io.micronaut:micronaut-bom:1.1.0.RC1') {
+       mavenBom('io.micronaut:micronaut-bom:1.1.0.RC2') {
             bomProperty 'rxjava2.version', '2.2.8'
             bomProperty 'reactor.version', '3.2.8.RELEASE'
             bomProperty 'swagger.version', '2.0.7'
