@@ -1,31 +1,54 @@
 package hello.world;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
 import io.micronaut.http.annotation.Controller;
 import io.reactivex.Flowable;
-import reactor.core.publisher.Flux;
+import io.reactivex.Single;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @Controller("/hello")
 public class HelloController implements HelloOperations {
 
     @Override
-    public Flowable<String> listAssetsRx(@Min(0) Integer offset, @Min(1) @Max(10000) Integer max, SortOrder sort) {
-        // TODO Auto-generated method stub
-        return null;
+    public Dummy dummy() {
+        return new Dummy();
     }
 
     @Override
-    public Flux<String> listAssets(@Min(0) Integer offset, @Min(1) @Max(10000) Integer max, SortOrder sort) {
-        // TODO Auto-generated method stub
-        return null;
+    public Single<Dummy> dummySingle() {
+        return Single.just(new Dummy());
     }
 
     @Override
-    public Flux<String> listChannelUpdates(@Min(0) Integer offset, @Min(1) @Max(10000) Integer max, SortOrder sort) {
-        // TODO Auto-generated method stub
-        return null;
+    public Flowable<Dummy> dummyFlowable() {
+        return Flowable.just(new Dummy());
+    }
+
+    @Override
+    @Operation(description = "Returns A dummy", summary = "Returns a Dummy")
+    @ApiResponse(responseCode = "200", description = "Returns a dummy", content = @Content(schema = @Schema(implementation = Dummy.class)))
+    @ApiResponse(responseCode = "500", description = "Internal Error")
+    public Dummy dummyAnnot() {
+        return new Dummy();
+    }
+
+    @Override
+    @Operation(description = "Returns A dummy", summary = "Returns a Dummy")
+    @ApiResponse(responseCode = "200", description = "Returns a dummy", content = @Content(schema = @Schema(implementation = Dummy.class)))
+    @ApiResponse(responseCode = "500", description = "Internal Error")
+    public Single<Dummy> dummySingleAnnot() {
+        return Single.just(new Dummy());
+    }
+
+    @Override
+    @Operation(description = "Returns A dummy", summary = "Returns a Dummy")
+    @ApiResponse(responseCode = "200", description = "Returns a dummy", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Dummy.class))))
+    @ApiResponse(responseCode = "500", description = "Internal Error")
+    public Flowable<Dummy> dummAnnotFlowable() {
+        return Flowable.just(new Dummy());
     }
 
 }

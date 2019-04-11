@@ -15,7 +15,17 @@
  */
 package io.micronaut.jackson.parser;
 
-import com.fasterxml.jackson.core.*;
+import java.io.IOException;
+import java.util.concurrent.ConcurrentLinkedDeque;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.async.ByteArrayFeeder;
 import com.fasterxml.jackson.core.io.JsonEOFException;
 import com.fasterxml.jackson.core.json.async.NonBlockingJsonParser;
@@ -23,12 +33,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import io.micronaut.core.async.processor.SingleThreadedBufferingProcessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import io.micronaut.core.async.processor.SingleThreadedBufferingProcessor;
 
 /**
  * A Reactive streams publisher that publishes a {@link JsonNode} once the JSON has been fully consumed.
@@ -129,10 +135,8 @@ public class JacksonProcessor extends SingleThreadedBufferingProcessor<byte[], J
                         }
 
                         if (isLast && streamArray && root instanceof ArrayNode) {
-                          //System.out.println("BREAK 1");
                             break;
                         } else {
-                          //System.out.println("PUBLISH");
                             currentDownstreamSubscriber()
                                     .ifPresent(subscriber -> {
                                             if (LOG.isTraceEnabled()) {
@@ -173,7 +177,6 @@ public class JacksonProcessor extends SingleThreadedBufferingProcessor<byte[], J
                 JsonNode node = nodeStack.peekFirst();
                 if (node == null) {
                     rootIsArray = true;
-                    //System.out.println("root array");
                 }
                 nodeStack.push(array(node));
                 break;
@@ -185,21 +188,16 @@ public class JacksonProcessor extends SingleThreadedBufferingProcessor<byte[], J
                 }
                 JsonNode current = nodeStack.pop();
                 if (nodeStack.isEmpty()) {
-                  //System.out.println("RETURN");
                     return current;
                 } else {
                     if (streamArray && nodeStack.size() == 1) {
                         JsonNode jsonNode = nodeStack.peekFirst();
                         if (jsonNode instanceof ArrayNode) {
-
-                          //System.out.println("RETURN2");
                             return current;
                         } else {
-                          //System.out.println("RETURN NULL 1");
                             return null;
                         }
                     } else {
-                     // System.out.println("RETURN NULL 2");
                         return null;
                     }
                 }
@@ -321,11 +319,9 @@ public class JacksonProcessor extends SingleThreadedBufferingProcessor<byte[], J
         }
 
         //its an array and the stack size is 1 which means the value is scalar
-        //System.out.println("--> "+rootIsArray+" "+nodeStack.size());
         if (rootIsArray && nodeStack.size() == 1) {
             ArrayNode arrayNode = (ArrayNode) nodeStack.peekFirst();
             if (arrayNode.size() > 0) {
-             //System.out.println("===> "+arrayNode.get(arrayNode.size() - 1));
                 return arrayNode.get(arrayNode.size() - 1);
             }
         }

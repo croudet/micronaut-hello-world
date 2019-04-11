@@ -133,4 +133,10 @@ public class HelloWorldControllerTest {
         assertEquals(6, subscriber.nodeCount);
     }
 
+    @Test
+    public void listDummies() {
+        System.out.println(client.toBlocking().exchange("/hello/dummies").code());
+        System.out.println(client.toBlocking().exchange("/hello/dummies").getContentLength());
+        System.out.println(client.toBlocking().exchange("/hello/dummies").toString());
+    }
 }
