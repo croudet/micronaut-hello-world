@@ -1,8 +1,11 @@
 package hello.world;
 
+import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Patch;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import reactor.core.publisher.Flux;
 
 public interface HelloOperations {
 
@@ -23,4 +26,7 @@ public interface HelloOperations {
 
     @Get("/dummyFlowableAnnot")
     Flowable<Dummy> dummAnnotFlowable();
+
+    @Patch("/dummy/patch")
+    Dummy patch(@Body Flux<Long> ids);
 }
