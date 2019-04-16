@@ -29,4 +29,7 @@ public interface HelloOperations {
 
     @Patch("/dummy/patch")
     Dummy patch(@Body Flux<Long> ids);
+
+    @Patch("/dummy/patch/obj")
+    Dummy patchDummies(@Body Flux<Dummy> dummies);
 }

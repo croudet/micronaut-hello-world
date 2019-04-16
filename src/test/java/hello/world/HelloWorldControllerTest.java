@@ -31,9 +31,14 @@ public class HelloWorldControllerTest {
     }
 
     @Test
-    public void testBodyFlux() {
+    public void testPrimitiveBodyFlux() {
         List<Long> l = Arrays.asList(1L, 2L, 3L);
         assertNotNull(helloClient.patch(Flux.fromIterable(l)));
     }
 
+    @Test
+    public void testObjectBodyFlux() {
+        List<Dummy> l = Arrays.asList(new Dummy(), new Dummy(), new Dummy());
+        assertNotNull(helloClient.patchDummies(Flux.fromIterable(l)));
+    }
 }

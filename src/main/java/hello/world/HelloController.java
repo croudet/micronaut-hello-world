@@ -58,4 +58,10 @@ public class HelloController implements HelloOperations {
         return new Dummy();
     }
 
+    @Override
+    public Dummy patchDummies(Flux<Dummy> ids) {
+        ids.count().block();
+        return new Dummy();
+    }
+
 }
