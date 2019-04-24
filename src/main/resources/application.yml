@@ -1,3 +1,9 @@
 micronaut:
     application:
         name: hello-world
+    executors:
+        dispatcher:
+            type: scheduled
+            core-pool-size: 1
+
+        

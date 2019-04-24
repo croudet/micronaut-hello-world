@@ -1,5 +1,7 @@
 package hello.world;
 
+import java.util.List;
+
 import io.micronaut.http.annotation.Controller;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -53,14 +55,20 @@ public class HelloController implements HelloOperations {
     }
 
     @Override
-    public Dummy patch(Flux<Long> ids) {
-        ids.count().block();
+    public Dummy patch(Flowable<Long> ids) {
+        System.out.println("COUNT " + ids.count().blockingGet());
+        return new Dummy();
+    }
+
+    @Override
+    public Dummy patchList(List<Long> ids) {
+        System.out.println("COUNT " + ids.size());
         return new Dummy();
     }
 
     @Override
     public Dummy patchDummies(Flux<Dummy> ids) {
-        ids.count().block();
+        System.out.println("COUNT " + ids.count().block());
         return new Dummy();
     }
 

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.runtime.server.EmbeddedServer;
-import reactor.core.publisher.Flux;
+import io.reactivex.Flowable;
 
 public class HelloWorldControllerTest {
     private static EmbeddedServer server;
@@ -30,15 +30,21 @@ public class HelloWorldControllerTest {
         }
     }
 
-    @Test
-    public void testPrimitiveBodyFlux() {
-        List<Long> l = Arrays.asList(1L, 2L, 3L);
-        assertNotNull(helloClient.patch(Flux.fromIterable(l)));
-    }
+//    @Test
+//    public void testPrimitiveBodyList() {
+//        List<Long> l = Arrays.asList(11L, 12L, 13L);
+//        assertNotNull(helloClient.patchList(l));
+//    }
 
     @Test
-    public void testObjectBodyFlux() {
-        List<Dummy> l = Arrays.asList(new Dummy(), new Dummy(), new Dummy());
-        assertNotNull(helloClient.patchDummies(Flux.fromIterable(l)));
+    public void testPrimitiveBodyFlux() {
+        List<Long> l = Arrays.asList(11L, 12L, 13L);
+        assertNotNull(helloClient.patch(Flowable.fromIterable(l)));
     }
+
+//    @Test
+//    public void testObjectBodyFlux() {
+//        List<Dummy> l = Arrays.asList(new Dummy(), new Dummy(), new Dummy());
+//        assertNotNull(helloClient.patchDummies(Flux.fromIterable(l)));
+//    }
 }
