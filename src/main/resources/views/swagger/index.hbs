@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8' />
+    <title>DiffServer - Swagger-ui</title>
+    <link rel='icon' type='image/png' href='https://unpkg.com/swagger-ui-dist@{{swaggerUi.version}}/favicon-32x32.png' sizes='32x32' />
+    <link rel='icon' type='image/png' href='https://unpkg.com/swagger-ui-dist@{{swaggerUi.version}}/favicon-16x16.png' sizes='16x16' />
+    <link rel='stylesheet' href='swagger-ui.css' type='text/css' media='screen, print' title='Style' charset='utf-8' />
+    <script src='https://unpkg.com/swagger-ui-dist@{{swaggerUi.version}}/swagger-ui-bundle.js'></script>
+    <script src='https://unpkg.com/swagger-ui-dist@{{swaggerUi.version}}/swagger-ui-standalone-preset.js'></script>
+    <link rel='stylesheet' type='text/css' href='https://unpkg.com/swagger-ui-dist@{{swaggerUi.version}}/swagger-ui.css' />
+    {{#if swaggerUi.theme.css}}
+    <link rel='stylesheet' type='text/css' href='https://unpkg.com/swagger-ui-themes@3.0.0/themes/3.x/{{swaggerUi.theme.css}}.css' />
+    {{/if}}
+</head>
+
+<body>
+    <div id='swagger-ui'></div>
+
+    <script>
+        window.onload = function() {
+            var ui = SwaggerUIBundle({
+                urls: [{{#each urls}}
+                    {
+                        name: '{{name}}',
+                        url: '{{url}}'
+                    }{{#unless @last}},{{/unless}}{{/each}}
+                ],
+                dom_id: '#swagger-ui',
+                deepLinking: {{swaggerUi.deepLinking}},
+                validatorUrl: null,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: '{{swaggerUi.layout}}'
+            });
+            window.ui = ui
+        }
+    </script>
+</body>
+
+</html>

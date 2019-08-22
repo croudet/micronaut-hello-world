@@ -1,9 +1,53 @@
+open-api:
+  path: /swagger
+  rapi-pdf-version: 1.0.3
+  swagger-ui:
+    version: 3.23.5
+    layout: StandaloneLayout
+    deepLinking: true
+    theme: FLATTOP # DEFAULT, MATERIAL, FEELING_BLUE, FLATTOP, MONOKAI, MUTED, NEWSPAPER, OUTLINE
+  redoc:
+    version: next
+  rapidoc:
+    version: 5.0.5
+    theme: dark # light or dark
+    layout: row # row or column
+    
 micronaut:
-    application:
-        name: hello-world
-    executors:
-        dispatcher:
-            type: scheduled
-            core-pool-size: 1
+  application:
+    name: hello-world
 
-        
+  executors:
+    scheduled:
+      type: scheduled
+      core-pool-size: 5
+
+  server:
+    netty:
+      use-native-transport: true
+      parent:
+        threads: 2
+      validate-headers: false
+      worker:
+        threads: 8 # number of netty worker threads
+
+  router:
+    static-resources:
+      openApiSpecs:
+        paths: classpath:META-INF/swagger
+        mapping: ${open-api.path}/**
+      favicon:
+        paths: classpath:favicon
+        mapping: /favicon.ico*
+      rapidocResources:
+        paths: classpath:views/rapidoc
+        mapping: /rapidoc*
+      redocResources:
+        paths: classpath:views/redoc
+        mapping: /redoc*
+      swaggerUIResources:
+        paths: classpath:views/swagger
+        mapping: /swagger-ui*
+      openApiJs:
+        paths: classpath:views
+        mapping: /openApi.js*

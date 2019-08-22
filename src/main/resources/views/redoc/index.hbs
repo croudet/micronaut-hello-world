@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset='UTF-8' />
+    <title>DiffServer - ReDoc</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700' rel='stylesheet' />
+    <link rel='stylesheet' href='redoc.css' type='text/css' media='screen, print' title='Style' charset='utf-8' />
+    <script src='https://unpkg.com/rapipdf@{{rapiPdfVersion}}/dist/rapipdf-min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/redoc@{{redoc.version}}/bundles/redoc.standalone.js'></script>
+    <script src='../openApi.js'></script>
+</head>
+
+<body>
+
+    <!-- Top navigation placeholder -->
+    <nav>
+        <ul id='links_container'>
+        </ul>
+    </nav>
+
+    <redoc scroll-y-offset='body > nav'></redoc>
+    </script>
+    <script>
+        // list of APIS
+        var apis = [{{#each urls}}
+            {
+              name: '{{name}}',
+              url: '{{url}}'
+            }{{#unless @last}},{{/unless}}{{/each}}],
+          list = document.getElementById('links_container'),
+          onClick = function() {
+            var url = this.getAttribute('data-link');
+            Redoc.init(url);
+          };
+        // initially render first API
+        Redoc.init(apis[0].url);
+        // dynamically building navigation items
+        openApi.createMenu(apis, list, onClick);
+    </script>
+</body>
+
+</html>

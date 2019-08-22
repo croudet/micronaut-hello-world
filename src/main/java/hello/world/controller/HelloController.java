@@ -1,7 +1,9 @@
-package hello.world;
+package hello.world.controller;
 
 import java.util.List;
 
+import hello.world.Dummy;
+import hello.world.HelloOperations;
 import io.micronaut.http.annotation.Controller;
 import io.reactivex.Flowable;
 import io.reactivex.Single;

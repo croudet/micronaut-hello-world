@@ -1,0 +1,26 @@
+#links_container {
+	list-style-type: none;
+	margin-left: -14px;
+}
+
+#links_container li {
+	cursor: pointer;
+	padding-right: 5px;
+	display: inline-block;
+}
+
+rapidoc {
+	display: block;
+}
+
+.rapipdf {
+	width: 122px;
+	height: 25px;
+	font-size: 15px;
+	display: inline-block;
+}
+
+.menu_label {
+	display: inline-block;
+	padding-right: 8px;
+}

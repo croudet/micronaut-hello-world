@@ -1,0 +1,45 @@
+<!doctype html>
+<!-- Important: must specify, else rendering will be effected -->
+<html>
+
+<head>
+    <title>DiffServer - RapiDoc</title>
+    <!-- Important: The Custom element uses utf8 characters -->
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes' />
+    <script src='https://unpkg.com/rapidoc@{{rapidoc.version}}/dist/rapidoc-min.js'></script>
+    <script src='https://unpkg.com/rapipdf@{{rapiPdfVersion}}/dist/rapipdf-min.js'></script>
+    <script src='../openApi.js'></script>
+    <link rel='stylesheet' href='rapidoc.css' type='text/css' media='screen, print' title='Style' charset='utf-8' />
+</head>
+
+<body>
+    <!-- Top navigation placeholder -->
+    <rapi-doc id='rapidoc' show-header='false' theme='{{rapidoc.theme}}' layout='{{rapidoc.layout}}'>
+      <div class='body-container'>
+        <div class='section-gap'>
+          <ul id='links_container' class='m-markdown regular-font'>
+          </ul>
+        </div>
+      </div>
+    </rapi-doc>
+    <script>
+        // list of APIS
+        var apis = [{{#each urls}}
+             {
+              name: '{{name}}',
+              url: '{{url}}'
+             }{{#unless @last}},{{/unless}}{{/each}}],
+          rapidoc = document.getElementById('rapidoc'),
+          list = document.getElementById('links_container'),
+          onClick = function() {
+            var url = this.getAttribute('data-link');
+            rapidoc.setAttribute('spec-url', url);
+          };
+        rapidoc.setAttribute('spec-url', apis[0].url);
+        // dynamically building navigation items
+        openApi.createMenu(apis, list, onClick);
+    </script>
+</body>
+
+</html>
