@@ -1,9 +1,15 @@
 package hello.world;
 
+import javax.annotation.Nullable;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(name = "Dummy", description = "A dummy class.")
 public class Dummy {
+    @Nullable
+    long id;
+
+    @Nullable
     private String foo = "foo";
 
     private String bar = "bar";

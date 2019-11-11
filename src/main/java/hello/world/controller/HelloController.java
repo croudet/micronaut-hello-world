@@ -2,8 +2,10 @@ package hello.world.controller;
 
 import java.util.List;
 
+import hello.world.Asset;
 import hello.world.Dummy;
 import hello.world.HelloOperations;
+import hello.world.SortOrder;
 import io.micronaut.http.annotation.Controller;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -72,6 +74,11 @@ public class HelloController implements HelloOperations {
     public Dummy patchDummies(Flux<Dummy> ids) {
         System.out.println("COUNT " + ids.count().block());
         return new Dummy();
+    }
+
+    @Override
+    public Flux<Asset> listAssets(String publisher, Integer offset, Integer max, SortOrder sort) {
+        return Flux.empty();
     }
 
 }

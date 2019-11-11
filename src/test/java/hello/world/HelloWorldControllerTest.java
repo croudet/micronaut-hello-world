@@ -47,4 +47,14 @@ public class HelloWorldControllerTest {
 //        List<Dummy> l = Arrays.asList(new Dummy(), new Dummy(), new Dummy());
 //        assertNotNull(helloClient.patchDummies(Flux.fromIterable(l)));
 //    }
+
+    @Test
+    public void testPageable() {
+        helloClient.listAssets("pub", null, null, null).blockFirst();
+        helloClient.listAssets("pub", null, null, SortOrder.ASC).blockFirst();
+        helloClient.listAssets("pub", 1, null, SortOrder.DESC).blockFirst();
+        helloClient.listAssets("pub", null, 10, SortOrder.DESC).blockFirst();
+        helloClient.listAssets("pub", 1, 10, SortOrder.DESC).blockFirst();
+        helloClient.listAssets("pub", 1, 10, null).blockFirst();
+    }
 }
