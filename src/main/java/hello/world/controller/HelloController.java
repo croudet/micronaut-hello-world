@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import reactor.core.publisher.Flux;
+import io.micronaut.http.annotation.Get;
+import javax.annotation.Nullable;
 
 @Controller("/hello")
 public class HelloController implements HelloOperations {
@@ -81,4 +83,8 @@ public class HelloController implements HelloOperations {
         return Flux.empty();
     }
 
+    @Get("/{id}{/language}")
+    public String getContract(String id, @Nullable String language) {
+      return null;
+    }
 }
