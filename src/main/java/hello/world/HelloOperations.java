@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
 
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
