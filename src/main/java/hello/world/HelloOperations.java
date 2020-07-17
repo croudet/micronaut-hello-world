@@ -5,14 +5,10 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 
 import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Consumes;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Patch;
-import io.micronaut.http.annotation.PathVariable;
-import io.micronaut.http.annotation.QueryValue;
+import io.micronaut.http.annotation.*;
 import io.micronaut.validation.Validated;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -48,6 +44,9 @@ public interface HelloOperations {
 
     @Patch("/dummy/patch/obj")
     Dummy patchDummies(@Body Flux<Dummy> dummies);
+
+    @Post("/dummy/post/obj")
+    Dummy postDummy(@Body @Nullable Dummy dummy);
 
     @Get("/publisher/{publisher}/assets{?offset,max,sort:[asc|desc|ASC|DESC]}")
     Flux<Asset> listAssets(@PathVariable @NotBlank String publisher, @QueryValue @Nullable @Min(0L) Integer offset, @QueryValue @Nullable @Min(1L) Integer max, @QueryValue @Nullable SortOrder sort);

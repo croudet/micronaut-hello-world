@@ -12,7 +12,7 @@ open-api:
     version: 5.0.5
     theme: dark # light or dark
     layout: row # row or column
-    
+
 micronaut:
   application:
     name: hello-world
@@ -51,3 +51,9 @@ micronaut:
       openApiJs:
         paths: classpath:views
         mapping: /openApi.js*
+
+jackson:
+  serialization:
+    indentOutput: true
+  deserialization:
+    failOnUnknownProperties: true

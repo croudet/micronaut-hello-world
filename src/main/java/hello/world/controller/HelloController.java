@@ -79,6 +79,11 @@ public class HelloController implements HelloOperations {
     }
 
     @Override
+    public Dummy postDummy(Dummy dummy) {
+        return dummy;
+    }
+
+    @Override
     public Flux<Asset> listAssets(String publisher, Integer offset, Integer max, SortOrder sort) {
         return Flux.empty();
     }

@@ -57,7 +57,7 @@ public class OpenApiConfig {
     void findOpenApiDefinitions() {
         // Micronaut puts generated Swagger YAML file into the META-INF/swagger
         // directory of the project's class output.
-        try (ScanResult scanResult = new ClassGraph().whitelistPathsNonRecursive("META-INF/swagger").scan()) {
+        try (ScanResult scanResult = new ClassGraph().acceptPathsNonRecursive("META-INF/swagger").scan()) {
             scanResult.getResourcesWithExtension("yml").forEach(this::buildURIConfig);
         }
     }
